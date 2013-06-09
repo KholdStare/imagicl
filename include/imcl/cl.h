@@ -34,4 +34,14 @@ namespace cl
 
 }
 
+namespace imcl
+{
+    /**
+     * Returns a helpful error message string representing
+     * the OpenCL error code
+     */
+    char const* cl_error_to_str(cl_int err);
+
+} /* imcl */ 
+
 #endif /* end of include guard: CL_H_AGYTVCTU */
