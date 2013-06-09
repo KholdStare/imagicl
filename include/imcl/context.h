@@ -7,6 +7,8 @@
 #define CONTEXT_H_XQMRRUCO
 
 #include <imcl/cl.h>
+#include <imcl/transfer_queue.h>
+#include <imcl/computation_queue.h>
 
 namespace imcl
 {
@@ -18,7 +20,8 @@ namespace imcl
     {
         cl::Device const device;
         cl::Context const context;
-        cl::CommandQueue const queue;
+        transfer_queue const transfer_q;
+        computation_queue const computation_q;
 
         compute_context();
     };

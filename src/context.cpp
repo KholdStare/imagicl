@@ -43,7 +43,8 @@ namespace imcl
     compute_context::compute_context()
         : device(getBestDevice()),
           context(device), 
-          queue(context, device)
+          transfer_q(context, device),
+          computation_q(context, device)
     { }
 
 }

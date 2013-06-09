@@ -6,7 +6,6 @@
 #ifndef CL_H_AGYTVCTU
 #define CL_H_AGYTVCTU
 
-
 #define __CL_ENABLE_EXCEPTIONS
 #ifdef MAC
 #include <OpenCL/cl.hpp>
