@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <imcl/context.h>
+#include <imcl/host_image.h>
 
 int main(int argc, char const *argv[])
 {
@@ -11,11 +12,7 @@ int main(int argc, char const *argv[])
 
     // load "image" on host
 
-    // create image on device from host image
-    
     // load kernel
-
-    // create output image on device
 
     // run kernel
 
