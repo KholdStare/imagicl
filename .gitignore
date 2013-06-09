@@ -13,6 +13,7 @@
 *.a
 
 # Swap/utility files
+gmon.out
 .*.swp
 tags
 *.log
