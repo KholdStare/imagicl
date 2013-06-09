@@ -9,20 +9,22 @@
 #include <array>
 
 #include <imcl/cl.h>
+#include <imcl/traits/cl_image_traits.hpp>
 
 namespace imcl
 {
 
+    // TODO: have host_image_dynamic (?) to have runtime-specified pixel type.
+    // templated host_image could wrap it in a typesafe manner.
+
     /**
      * An OpenCL image allocated on the host
      */
-    template <typename ImageType, typename PixelType>
+    template <typename ImageType, typename PixelType> // TODO: maybe pix type shouldn't be compile-time?
     class host_image
     {
         typedef ImageType cl_image_type;
-        // TODO: traits to get number of dimensions from cl image type
-        static constexpr N = 2;
-
+        static constexpr std::size_t N = cl_image_traits<cl_image_type>::N;
 
         cl_image_type image_;
 
@@ -35,6 +37,11 @@ namespace imcl
         // May require low-level C opencl calls.
     };
     
+    template <typename ImageType, typename PixelType>
+    host_image<ImageType, PixelType>::host_image(std::array<std::size_t, N> const& dims)
+    {
+
+    }
 } /* imcl */ 
 
 
