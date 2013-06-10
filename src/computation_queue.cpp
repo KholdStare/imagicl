@@ -8,7 +8,7 @@
 namespace imcl
 {
 
-    struct computation_queue::computation_queue(cl::Context const& context, cl::Device const& device)
+    computation_queue::computation_queue(cl::Context const& context, cl::Device const& device)
         : queue(context, device)
     { }
     

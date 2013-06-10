@@ -8,7 +8,7 @@
 namespace imcl
 {
 
-    struct transfer_queue::transfer_queue(cl::Context const& context, cl::Device const& device)
+    transfer_queue::transfer_queue(cl::Context const& context, cl::Device const& device)
         : queue(context, device)
     { }
     
