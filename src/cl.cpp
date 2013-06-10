@@ -7,7 +7,7 @@
 
 namespace imcl
 {
-    char const* clErrorToStr(cl_int err)
+    char const* cl_error_to_str(cl_int err)
     {
         switch (err)
         {
