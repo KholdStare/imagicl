@@ -10,10 +10,9 @@
 #include <imcl/context.h>
 #include <imcl/cl_image.h>
 
-BOOST_AUTO_TEST_CASE( construct_image_test )
-{
-    using namespace std;
 
+void create_image_with_flags( cl_mem_flags mem_flags )
+{
     imcl::compute_context c;
 
     BOOST_REQUIRE( c.context() != nullptr );
@@ -28,7 +27,7 @@ BOOST_AUTO_TEST_CASE( construct_image_test )
         image = imcl::construct_image<image_type>(
                                 c.context(),
                                 dims,
-                                CL_MEM_ALLOC_HOST_PTR,
+                                mem_flags,
                                 format);
     }
     catch (cl::Error const& e)
@@ -39,3 +38,28 @@ BOOST_AUTO_TEST_CASE( construct_image_test )
     BOOST_REQUIRE( image() != nullptr );
 }
 
+BOOST_AUTO_TEST_CASE( construct_image_test_on_host )
+{
+    create_image_with_flags( CL_MEM_ALLOC_HOST_PTR );
+}
+
+BOOST_AUTO_TEST_CASE( construct_image_test_on_device )
+{
+    using namespace std;
+
+    cl_mem_flags flags_array[] =
+        {
+            CL_MEM_READ_WRITE,
+            CL_MEM_READ_ONLY,
+            CL_MEM_WRITE_ONLY,
+            CL_MEM_HOST_WRITE_ONLY,
+            CL_MEM_HOST_READ_ONLY,
+            CL_MEM_HOST_NO_ACCESS,
+        };
+
+    std::for_each(begin(flags_array), end(flags_array),
+        [] (cl_mem_flags flags)
+        {
+            create_image_with_flags( flags );
+        });
+}
