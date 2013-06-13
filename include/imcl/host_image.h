@@ -17,17 +17,25 @@ namespace imcl
     /**
      * An OpenCL image allocated on the host
      */
-    template <typename ImageType, typename PixelType> // TODO: maybe pix type shouldn't be compile-time?
-    class host_image : public image_base<ImageType, PixelType>
+    template <typename ImageType, typename PixelType>
+    class host_image : private image_base<ImageType, PixelType> // TODO: composition instead of private inheritance?
     {
         typedef image_base<ImageType, PixelType> base_type;
+        typedef typename base_type::cl_image_type cl_image_type;
+        static constexpr std::size_t N = base_type::N;
 
-        host_image(cl::Context const& context, std::array<std::size_t, base_type::N> const& dims);
+        host_image(cl::Context const& context, std::array<std::size_t, N> const& dims);
         // TODO: another constructor wit PixelType data?
+        // TODO: larger context struct?
         
         // TODO: when looking into collapsing/expanding dimensions,
         // see if we can "reinterpret" an openCL mem region as another type.
         // May require low-level C opencl calls.
+        
+
+        // TODO: Think about move/copy semantics. Make movable, but not move assignable?
+    private:
+        // TODO: map/unmap ?
     };
 
 
@@ -37,7 +45,7 @@ namespace imcl
     template <typename ImageType, typename PixelType>
     host_image<ImageType, PixelType>::host_image(
                                         cl::Context const& context,
-                                        std::array<std::size_t, base_type::N> const& dims
+                                        std::array<std::size_t, N> const& dims
                                       )
         : base_type(context, dims, CL_MEM_ALLOC_HOST_PTR)
     {

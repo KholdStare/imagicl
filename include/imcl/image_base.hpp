@@ -10,6 +10,7 @@
 
 #include <imcl/cl.h>
 #include <imcl/traits/cl_image_traits.hpp>
+#include <imcl/pixel.hpp>
 
 namespace imcl
 {
@@ -20,13 +21,14 @@ namespace imcl
     template <typename ImageType, typename PixelType>
     class image_base
     {
-        ImageType image_;
-
     public:
         typedef ImageType cl_image_type;
         static constexpr std::size_t N = cl_image_traits<cl_image_type>::N;
 
         image_base(cl::Context const& context, std::array<std::size_t, N> const& dims, cl_mem_flags mem_flags);
+
+        cl_image_type image_;
+        std::array<std::size_t, N> const dims_;
     };
 
 
@@ -41,9 +43,10 @@ namespace imcl
                     context,
                     dims,
                     mem_flags,
-                    cl::ImageFormat(CL_RGBA, CL_FLOAT) // TODO: make customizable
+                    pixel_image_format<PixelType>()
             )
         )
+        , dims_(dims)
     {
 
     }
