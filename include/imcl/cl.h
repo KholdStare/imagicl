@@ -3,6 +3,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+/**
+ * \file Header for all cl related errata and helpers
+ */
+
 #ifndef CL_H_AGYTVCTU
 #define CL_H_AGYTVCTU
 
@@ -41,6 +45,72 @@ namespace imcl
      * the OpenCL error code
      */
     char const* cl_error_to_str(cl_int err);
+
+
+    /***************************************************************************
+     *                           cl::Vector helpers                            *
+     ***************************************************************************/
+
+    namespace detail
+    {
+
+        template<typename Vec>
+        void vector_constructor_impl(Vec& vec)
+        { }
+
+        // only works for non-array arguments
+        template<typename Vec, typename U, typename... Us>
+        void vector_constructor_impl(Vec& vec, U&& first, Us&&... rest)
+        {
+            vec.push_back(std::forward<U>(first));
+            vector_constructor_impl(vec, std::forward<Us>(rest)...);
+        }
+
+    }
+
+    /**
+     * Allows inplace construction of cl::vectors,
+     * without having to manually push_back values.
+     * 
+     * For example, to construct a cl::size_t of 3 elements, do:
+     *
+     *     vector_constructor<size_t>::construct(0, 0, 0)
+     *
+     */
+    template <typename T>
+    struct vector_constructor
+    {
+
+        template <typename... Ts>
+        static cl::vector<T, sizeof...(Ts)>
+        construct(Ts&&... args)
+        {
+            cl::vector<T, sizeof...(Ts)> vec;
+            detail::vector_constructor_impl(vec, std::forward<Ts>(args)...);
+            return vec;
+        }
+
+    };
+
+    /**
+     * Specialization for size_t.
+     *
+     * cl::Vectors for size_t are actually cl::size_t.
+     */
+    template <>
+    struct vector_constructor<typename ::size_t>
+    {
+
+        template <typename... Ts>
+        static cl::size_t<sizeof...(Ts)>
+        construct(Ts&&... args)
+        {
+            cl::size_t<sizeof...(Ts)> vec;
+            detail::vector_constructor_impl(vec, std::forward<Ts>(args)...);
+            return vec;
+        }
+
+    };
 
 } /* imcl */ 
 
