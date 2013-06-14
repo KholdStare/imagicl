@@ -32,6 +32,16 @@ namespace imcl
     };
 
 
+    /**
+     * A region of an image
+     */
+    struct image_region
+    {
+        cl::size_t<3> origin;
+        cl::size_t<3> dims;
+    };
+
+
     template <typename ImageType, typename PixelType>
     image_base<ImageType, PixelType>::image_base(
                 cl::Context const& context,
