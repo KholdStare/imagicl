@@ -13,7 +13,6 @@
 namespace imcl
 {
     
-    // TODO: test this
     // TODO: separate into "cl" folder ? for cl specific functionality?
     template <typename CLImage>
     CLImage construct_image(
@@ -74,6 +73,7 @@ namespace imcl
 
         return hostImage;
     }
+
     
 } /* imcl */ 
 

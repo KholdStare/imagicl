@@ -60,6 +60,11 @@ namespace imcl
     // TODO: pixel_traits
     // TODO: channel_traits
     
+
+    // Typedefs
+
+    typedef pixel_rgba<float> pixel_float4;
+    
 } /* imcl */ 
 
 

@@ -26,6 +26,9 @@ namespace cl
     namespace detail
     {
 
+        /**
+         * Missing trait for cl_image_info in cl namespace.
+         */
         struct cl_image_info;
         template<>
         struct param_traits<detail::cl_image_info, CL_IMAGE_ARRAY_SIZE>

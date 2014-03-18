@@ -18,6 +18,7 @@ namespace imcl
      */
     struct compute_context
     {
+        // TODO: Have GPU device and CPU device?
         cl::Device const device;
         cl::Context const context;
         transfer_queue const transfer_q;

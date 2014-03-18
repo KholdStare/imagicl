@@ -21,6 +21,7 @@ namespace imcl
         cl::CommandQueue const queue; // TODO: make these private?
 
         transfer_queue(cl::Context const&, cl::Device const&);
+        // TODO: move/copy semantics
 
         void enqueue_write_image(
                 cl::Image const&, // make this image_base?
